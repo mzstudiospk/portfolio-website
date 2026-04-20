@@ -1,101 +1,168 @@
-import type { Metadata } from "next";
-import { Inter } from "next/font/google";
+import type { Metadata, Viewport } from "next";
+import { Inter, Geist_Mono } from "next/font/google";
 import "./globals.css";
-import Header from "@/components/Header";
-import Footer from "@/components/Footer";
-import NextTopLoader from "nextjs-toploader";
-import SeoDevCheck from "@/components/SeoDevCheck";
-import { OG_IMAGE_ABSOLUTE, SITE_URL_FINAL, sanitizeDescription } from "@/lib/seo";
 
-const inter = Inter({ subsets: ["latin"] });
+const inter = Inter({
+  variable: "--font-inter",
+  subsets: ["latin"],
+  display: "swap",
+});
 
-const DEFAULT_DESC =
-  "Senior React Native & Full-Stack JavaScript Engineer with 5+ years experience building production mobile and web apps. Open to remote, contract and full-time opportunities.";
+const geistMono = Geist_Mono({
+  variable: "--font-geist-mono",
+  subsets: ["latin"],
+  display: "swap",
+});
+
+const SITE_URL = "https://muhammad-zeeshan-dev.vercel.app";
+const SITE_NAME = "Muhammad Zeeshan";
+const SITE_TITLE =
+  "Muhammad Zeeshan | Senior React Native Developer & Founder @ MZ Studios";
+const SITE_DESCRIPTION =
+  "Senior React Native Developer from Pakistan with 5+ years experience and 20+ apps delivered. Founder of MZ Studios. Available for mobile app development, web development, and startup MVPs.";
+
+// Person schema for Google's Knowledge Graph. Keep in sync with the page copy.
+const JSON_LD_PERSON = {
+  "@context": "https://schema.org",
+  "@type": "Person",
+  name: "Muhammad Zeeshan",
+  jobTitle: "Senior React Native Developer",
+  url: SITE_URL,
+  image: `${SITE_URL}/og.png`,
+  email: "mailto:zeeshanofficial337@gmail.com",
+  telephone: "+923461768288",
+  address: {
+    "@type": "PostalAddress",
+    addressLocality: "Multan",
+    addressCountry: "PK",
+  },
+  worksFor: {
+    "@type": "Organization",
+    name: "MZ Studios",
+    url: "https://facebook.com/MZStudiosPK",
+  },
+  knowsAbout: [
+    "React Native",
+    "Next.js",
+    "TypeScript",
+    "Mobile App Development",
+    "Node.js",
+    "AWS",
+  ],
+  sameAs: [
+    "https://github.com/mzstudiospk",
+    "https://linkedin.com/in/muhammadzeeshan-dev",
+    "https://facebook.com/MZStudiosPK",
+  ],
+};
 
 export const metadata: Metadata = {
-  metadataBase: new URL(SITE_URL_FINAL),
+  metadataBase: new URL(SITE_URL),
   title: {
-    default: "Senior React Native Engineer | Muhammad Zeeshan",
+    default: SITE_TITLE,
     template: "%s | Muhammad Zeeshan",
   },
-  description: sanitizeDescription(DEFAULT_DESC),
+  description: SITE_DESCRIPTION,
+  applicationName: SITE_NAME,
+  authors: [{ name: "Muhammad Zeeshan", url: "https://github.com/mzstudiospk" }],
+  creator: "Muhammad Zeeshan",
+  publisher: "MZ Studios",
+  keywords: [
+    "Muhammad Zeeshan",
+    "React Native Developer",
+    "Mobile App Developer Pakistan",
+    "Senior Developer",
+    "MZ Studios",
+    "Next.js",
+    "TypeScript",
+    "Freelance Developer",
+    "App Developer Multan",
+  ],
+  category: "technology",
+  alternates: { canonical: SITE_URL },
   openGraph: {
     type: "website",
-    locale: "en_US",
-    url: SITE_URL_FINAL,
-    title: "Senior React Native Engineer | Muhammad Zeeshan",
-    description: sanitizeDescription(DEFAULT_DESC),
+    url: SITE_URL,
     siteName: "Muhammad Zeeshan Portfolio",
-    images: [{ url: OG_IMAGE_ABSOLUTE, width: 1200, height: 630, alt: "Muhammad Zeeshan - Senior React Native Engineer" }],
+    title: SITE_TITLE,
+    description: SITE_DESCRIPTION,
+    locale: "en_US",
+    alternateLocale: ["en_PK"],
+    images: [
+      {
+        url: "/og.png",
+        width: 1200,
+        height: 630,
+        alt: "Muhammad Zeeshan - Senior React Native Developer",
+      },
+    ],
   },
   twitter: {
     card: "summary_large_image",
-    images: [OG_IMAGE_ABSOLUTE],
-    title: "Senior React Native Engineer | Muhammad Zeeshan",
-    description: sanitizeDescription(DEFAULT_DESC),
+    title: SITE_TITLE,
+    description: SITE_DESCRIPTION,
+    images: ["/og.png"],
+    creator: "@mzstudiospk",
   },
-  keywords: [
-    "Senior React Native Engineer",
-    "React Native developer remote",
-    "Full-Stack JavaScript developer",
-    "React Native developer Pakistan",
-    "Principal Software Engineer",
-    "mobile app developer",
-    "iOS developer",
-    "Android developer",
-    "React developer",
-    "Next.js developer",
-    "JavaScript developer",
-    "TypeScript developer",
-  ],
-  authors: [{ name: "Muhammad Zeeshan" }],
-  creator: "Muhammad Zeeshan",
+  robots: {
+    index: true,
+    follow: true,
+    googleBot: {
+      index: true,
+      follow: true,
+      "max-image-preview": "large",
+      "max-snippet": -1,
+      "max-video-preview": -1,
+    },
+  },
   icons: {
-    icon: "/profile.png",
+    icon: [
+      { url: "/favicon.ico" },
+      { url: "/favicon-96x96.png", type: "image/png", sizes: "96x96" },
+      { url: "/favicon.svg", type: "image/svg+xml" },
+    ],
+    apple: [{ url: "/apple-touch-icon.png", sizes: "180x180" }],
+    shortcut: "/favicon.ico",
   },
+  manifest: "/site.webmanifest",
+  appleWebApp: {
+    capable: true,
+    title: "Muhammad Zeeshan",
+    statusBarStyle: "black-translucent",
+  },
+  formatDetection: {
+    telephone: false,
+    email: false,
+    address: false,
+  },
+};
+
+export const viewport: Viewport = {
+  themeColor: "#0a0e1a",
+  width: "device-width",
+  initialScale: 1,
+  colorScheme: "dark",
 };
 
 export default function RootLayout({
   children,
-}: {
+}: Readonly<{
   children: React.ReactNode;
-}) {
+}>) {
   return (
-    <html lang="en" className="scroll-smooth">
-      <body
-        className={`${inter.className} antialiased bg-white dark:bg-slate-900 text-slate-900 dark:text-white`}
-      >
-        <NextTopLoader
-          color="rgb(59 130 246)"
-          initialPosition={0.08}
-          crawlSpeed={200}
-          height={4}
-          crawl={true}
-          showSpinner={false}
-          easing="ease"
-          speed={200}
-          shadow="0 0 15px rgb(59 130 246), 0 0 8px rgb(37 99 235)"
-          zIndex={1600}
-          showAtBottom={false}
+    <html
+      lang="en"
+      // `dark` is applied permanently — the portfolio ships only a dark theme.
+      className={`${inter.variable} ${geistMono.variable} dark h-full antialiased`}
+      suppressHydrationWarning
+    >
+      <body className="min-h-full bg-background font-sans text-foreground">
+        {/* JSON-LD for rich results. Placed in the body per Next.js guidance. */}
+        <script
+          type="application/ld+json"
+          dangerouslySetInnerHTML={{ __html: JSON.stringify(JSON_LD_PERSON) }}
         />
-        {/* Main Website Background */}
-        <div className="fixed inset-0 -z-10">
-          {/* Background Gradient */}
-          <div className="absolute inset-0 bg-gradient-to-br from-slate-50 via-blue-50 to-indigo-100 dark:from-slate-900 dark:via-slate-800 dark:to-blue-900"></div>
-
-          {/* Background Pattern */}
-          <div className="absolute inset-0 bg-grid-slate-100 dark:bg-grid-slate-800 [mask-image:linear-gradient(0deg,white,rgba(255,255,255,0.6))] dark:[mask-image:linear-gradient(0deg,rgba(255,255,255,0.1),rgba(255,255,255,0.5))]"></div>
-
-          {/* Floating Elements */}
-          <div className="absolute top-20 left-20 w-72 h-72 bg-blue-400/20 rounded-full mix-blend-multiply filter blur-xl opacity-70 animate-blob animate-float"></div>
-          <div className="absolute top-40 right-20 w-72 h-72 bg-purple-400/20 rounded-full mix-blend-multiply filter blur-xl opacity-70 animate-blob animation-delay-2000 animate-float"></div>
-          <div className="absolute -bottom-8 left-40 w-72 h-72 bg-pink-400/20 rounded-full mix-blend-multiply filter blur-xl opacity-70 animate-blob animation-delay-4000 animate-float"></div>
-        </div>
-
-        <SeoDevCheck />
-        <Header />
-        <main>{children}</main>
-        <Footer />
+        {children}
       </body>
     </html>
   );
