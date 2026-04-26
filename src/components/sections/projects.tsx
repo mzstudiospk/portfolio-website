@@ -1,7 +1,8 @@
 "use client";
 
 import { motion, type Variants } from "framer-motion";
-import { ExternalLink, FolderOpen } from "lucide-react";
+import Image from "next/image";
+import { ExternalLink } from "lucide-react";
 
 import { SectionHeading } from "@/src/components/sections/section-heading";
 import { GithubIcon } from "@/src/components/icons";
@@ -12,8 +13,8 @@ type Project = {
   tech: string[];
   github?: string;
   external?: string;
-  // Tailwind `from-X via-Y to-Z` gradient classes for the thumbnail.
-  gradient: string;
+  image: string;
+  imageAlt: string;
   featured?: boolean;
 };
 
@@ -24,7 +25,8 @@ const PROJECTS: Project[] = [
       "Healthcare mobile application with user authentication, OTP verification, appointment booking, and medical information management for Pakistani healthcare providers.",
     tech: ["React Native", "Firebase", "Redux", "REST API"],
     github: "https://github.com/mzstudiospk/SwaasthGaurdian",
-    gradient: "from-sky-500 via-cyan-500 to-teal-500",
+    image: "/projects/swaasthgaurdian.png",
+    imageAlt: "SwaasthGaurdian Healthcare Mobile App Mockup",
     featured: true,
   },
   {
@@ -32,7 +34,8 @@ const PROJECTS: Project[] = [
     description:
       "Multi-vendor e-commerce platform with cart management, payment integration, order tracking, and seller dashboard. Deployed on Google Play Store.",
     tech: ["React Native", "Node.js", "MongoDB", "Stripe"],
-    gradient: "from-purple-500 via-fuchsia-500 to-pink-500",
+    image: "/projects/ecommerce-app.png",
+    imageAlt: "E-Commerce Mobile App Mockup",
     featured: true,
   },
   {
@@ -40,7 +43,8 @@ const PROJECTS: Project[] = [
     description:
       "Financial services dashboard serving 100K+ users. Built as Principal Engineer at Abhi (YC S21). Handles salary advances and transactions.",
     tech: ["React Native", "Node.js", "PostgreSQL", "AWS"],
-    gradient: "from-green-500 via-emerald-500 to-teal-600",
+    image: "/projects/fintech-dashboard.png",
+    imageAlt: "Fintech Dashboard Web App Mockup",
     featured: true,
   },
   {
@@ -48,14 +52,16 @@ const PROJECTS: Project[] = [
     description:
       "On-demand food delivery platform with real-time order tracking, driver dashboard, restaurant management, and live chat support.",
     tech: ["React Native", "Firebase", "Google Maps API"],
-    gradient: "from-orange-500 via-red-500 to-rose-500",
+    image: "/projects/food-delivery.png",
+    imageAlt: "Food Delivery Mobile App Mockup",
   },
   {
     title: "Social Networking App",
     description:
       "Social platform with real-time messaging, feeds, stories, and video calls. Scalable architecture for millions of users.",
     tech: ["React Native", "Node.js", "WebSocket", "MongoDB"],
-    gradient: "from-indigo-500 via-violet-500 to-purple-500",
+    image: "/projects/social-app.png",
+    imageAlt: "Social Networking Mobile App Mockup",
   },
   {
     title: "MZ Studios Portfolio",
@@ -64,7 +70,8 @@ const PROJECTS: Project[] = [
     tech: ["Next.js", "TypeScript", "Tailwind", "Framer Motion"],
     github: "https://github.com/mzstudiospk/portfolio-website",
     external: "https://muhammad-zeeshan-dev.vercel.app",
-    gradient: "from-[#2e86de] via-purple-500 to-[#f39c12]",
+    image: "/projects/mz-portfolio.png",
+    imageAlt: "MZ Studios Portfolio Website Mockup",
   },
 ];
 
@@ -110,32 +117,24 @@ export function Projects() {
           {PROJECTS.map((p, i) => (
             <motion.li key={p.title} variants={card}>
               <article className="group/card flex h-full flex-col overflow-hidden rounded-2xl border border-white/10 bg-surface/40 backdrop-blur-xl transition-all duration-300 hover:-translate-y-1 hover:border-brand/40 hover:shadow-[0_24px_60px_-24px_rgba(46,134,222,0.45)]">
-                {/* Gradient thumbnail */}
-                <div className="relative h-40 overflow-hidden sm:h-44">
-                  <div
-                    className={`absolute inset-0 bg-gradient-to-br ${p.gradient} transition-transform duration-500 ease-[cubic-bezier(0.22,1,0.36,1)] group-hover/card:scale-110`}
+                {/* Project mockup thumbnail */}
+                <div className="relative h-52 overflow-hidden bg-[#0A0E1A] sm:h-56">
+                  <Image
+                    src={p.image}
+                    alt={p.imageAlt}
+                    fill
+                    sizes="(min-width: 1024px) 33vw, (min-width: 768px) 50vw, 100vw"
+                    loading="lazy"
+                    className="object-cover object-top brightness-95 transition-[transform,filter] duration-500 ease-[cubic-bezier(0.22,1,0.36,1)] group-hover/card:scale-105 group-hover/card:brightness-110"
                   />
-                  {/* Subtle grid pattern over the gradient */}
+                  {/* Subtle dark gradient overlay for badge legibility & smooth blend into card body */}
                   <div
                     aria-hidden
-                    className="absolute inset-0 opacity-20 mix-blend-overlay"
-                    style={{
-                      backgroundImage:
-                        "linear-gradient(to right, rgba(255,255,255,0.5) 1px, transparent 1px), linear-gradient(to bottom, rgba(255,255,255,0.5) 1px, transparent 1px)",
-                      backgroundSize: "28px 28px",
-                    }}
-                  />
-                  {/* Vignette into the card body for smooth blend */}
-                  <div
-                    aria-hidden
-                    className="absolute inset-0 bg-gradient-to-b from-transparent via-transparent to-black/30"
+                    className="pointer-events-none absolute inset-0 bg-gradient-to-b from-black/30 via-transparent to-black/40"
                   />
 
-                  <div className="absolute inset-x-4 top-4 flex items-start justify-between">
-                    <span className="inline-flex size-10 items-center justify-center rounded-xl border border-white/25 bg-black/30 text-white backdrop-blur">
-                      <FolderOpen className="size-5" />
-                    </span>
-                    <span className="font-mono text-xs text-white/85">
+                  <div className="absolute inset-x-4 top-4 flex items-start justify-end">
+                    <span className="font-mono text-xs text-white/85 drop-shadow-[0_1px_2px_rgba(0,0,0,0.6)]">
                       {String(i + 1).padStart(2, "0")}
                     </span>
                   </div>
