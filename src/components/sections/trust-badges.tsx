@@ -11,6 +11,27 @@ const ITEMS = [
   { emoji: "🇵🇰", text: "Made in Pakistan" },
 ] as const;
 
+type Item = (typeof ITEMS)[number];
+
+function Badge({
+  item,
+  textSizeClass,
+}: {
+  item: Item;
+  textSizeClass: string;
+}) {
+  return (
+    <span
+      className={`flex shrink-0 items-center gap-2 font-mono ${textSizeClass} text-foreground/65 opacity-70 transition-opacity duration-200 hover:opacity-100`}
+    >
+      <span aria-hidden className="text-base sm:text-lg">
+        {item.emoji}
+      </span>
+      {item.text}
+    </span>
+  );
+}
+
 export function TrustBadges() {
   return (
     <motion.section
@@ -26,23 +47,43 @@ export function TrustBadges() {
           Trusted by &amp; featured on
         </p>
 
-        {/* On mobile the row scrolls horizontally; on desktop it wraps & centers. */}
-        <div className="mt-5 -mx-6 overflow-x-auto px-6 md:mt-6 md:overflow-visible">
-          <div className="flex items-center gap-6 whitespace-nowrap md:flex-wrap md:justify-center md:gap-8">
+        {/* Mobile: continuous marquee with edge fade. Pauses on hover/touch.
+            Items duplicated for a seamless -50% loop. */}
+        <div
+          className="group/marquee relative mt-5 -mx-6 overflow-hidden md:hidden"
+          style={{
+            maskImage:
+              "linear-gradient(to right, transparent 0, black 8%, black 92%, transparent 100%)",
+            WebkitMaskImage:
+              "linear-gradient(to right, transparent 0, black 8%, black 92%, transparent 100%)",
+          }}
+        >
+          <div
+            className="flex w-max items-center gap-6 whitespace-nowrap pl-6 animate-[marquee_28s_linear_infinite] motion-reduce:animate-none group-hover/marquee:[animation-play-state:paused] group-active/marquee:[animation-play-state:paused]"
+          >
+            {[...ITEMS, ...ITEMS].map((item, i) => (
+              <span
+                key={`${item.text}-${i}`}
+                aria-hidden={i >= ITEMS.length || undefined}
+              >
+                <Badge item={item} textSizeClass="text-xs" />
+              </span>
+            ))}
+          </div>
+        </div>
+
+        {/* Desktop: original wrap & centered layout — unchanged. */}
+        <div className="mt-6 hidden md:block">
+          <div className="flex flex-wrap items-center justify-center gap-8">
             {ITEMS.map((item, i) => (
               <Fragment key={item.text}>
                 {i > 0 && (
                   <span
                     aria-hidden
-                    className="hidden h-4 w-px shrink-0 self-center bg-white/10 md:block"
+                    className="h-4 w-px shrink-0 self-center bg-white/10"
                   />
                 )}
-                <span className="flex shrink-0 items-center gap-2 font-mono text-xs text-foreground/65 opacity-70 transition-opacity duration-200 hover:opacity-100 sm:text-sm">
-                  <span aria-hidden className="text-base sm:text-lg">
-                    {item.emoji}
-                  </span>
-                  {item.text}
-                </span>
+                <Badge item={item} textSizeClass="text-sm" />
               </Fragment>
             ))}
           </div>

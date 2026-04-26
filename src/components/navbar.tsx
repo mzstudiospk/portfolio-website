@@ -1,12 +1,30 @@
 "use client";
 
-import { useEffect, useState } from "react";
+import { useCallback, useEffect, useState, type MouseEvent } from "react";
 import { AnimatePresence, motion } from "framer-motion";
 import { Mail, Menu, X } from "lucide-react";
 
 import { Button } from "@/components/ui/button";
 import { cn } from "@/lib/utils";
 import { GithubIcon } from "@/src/components/icons";
+
+// Reads CSS scroll-padding-top so JS scroll honors the same navbar offset.
+function readScrollPaddingTop() {
+  if (typeof window === "undefined") return 80;
+  const raw = getComputedStyle(document.documentElement).scrollPaddingTop;
+  const n = parseFloat(raw);
+  return Number.isFinite(n) ? n : 80;
+}
+
+export function smoothScrollToHash(href: string) {
+  if (!href.startsWith("#")) return;
+  const target = document.querySelector<HTMLElement>(href);
+  if (!target) return;
+  const offset = readScrollPaddingTop();
+  const top = target.getBoundingClientRect().top + window.scrollY - offset;
+  window.scrollTo({ top, behavior: "smooth" });
+  if (history.replaceState) history.replaceState(null, "", href);
+}
 
 const NAV_LINKS = [
   { href: "#about", label: "About" },
@@ -41,6 +59,32 @@ export function Navbar() {
     return () => window.removeEventListener("resize", onResize);
   }, []);
 
+  // Desktop links: prevent the default jump so we control offset+smoothness uniformly.
+  const handleDesktopNavClick = useCallback(
+    (e: MouseEvent<HTMLAnchorElement>, href: string) => {
+      if (!href.startsWith("#")) return;
+      e.preventDefault();
+      smoothScrollToHash(href);
+    },
+    [],
+  );
+
+  // Mobile links: close the sheet first, wait for the layout shift to settle,
+  // then scroll. Otherwise the collapsing menu changes the document height
+  // mid-scroll and the browser lands at the wrong offset.
+  const handleMobileNavClick = useCallback(
+    (e: MouseEvent<HTMLAnchorElement>, href: string) => {
+      if (!href.startsWith("#")) {
+        setMobileOpen(false);
+        return;
+      }
+      e.preventDefault();
+      setMobileOpen(false);
+      window.setTimeout(() => smoothScrollToHash(href), 260);
+    },
+    [],
+  );
+
   return (
     <motion.header
       initial={{ y: -24, opacity: 0 }}
@@ -60,6 +104,7 @@ export function Navbar() {
         {/* Logo */}
         <a
           href="#top"
+          onClick={(e) => handleDesktopNavClick(e, "#top")}
           aria-label="Muhammad Zeeshan — back to top"
           className="group relative inline-flex items-center"
         >
@@ -80,6 +125,7 @@ export function Navbar() {
             >
               <a
                 href={link.href}
+                onClick={(e) => handleDesktopNavClick(e, link.href)}
                 className="relative rounded-md px-3 py-2 text-sm font-medium text-foreground/70 transition-colors hover:text-foreground"
               >
                 <span className="relative">
@@ -166,7 +212,7 @@ export function Navbar() {
                 <li key={link.href}>
                   <a
                     href={link.href}
-                    onClick={() => setMobileOpen(false)}
+                    onClick={(e) => handleMobileNavClick(e, link.href)}
                     className="flex items-center gap-3 rounded-md px-3 py-3 text-sm font-medium text-foreground/80 transition-colors hover:bg-white/5 hover:text-foreground"
                   >
                     <span className="font-mono text-xs text-brand">

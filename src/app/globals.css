@@ -59,6 +59,16 @@
   --radius-4xl: calc(var(--radius) * 2.6);
 }
 
+/* Mobile trust-badges strip uses this for a seamless ticker (items rendered 2x). */
+@keyframes marquee {
+  from {
+    transform: translateX(0);
+  }
+  to {
+    transform: translateX(-50%);
+  }
+}
+
 @keyframes wave {
   0%,
   60%,

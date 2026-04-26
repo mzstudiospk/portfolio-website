@@ -8,6 +8,7 @@ import {
   GithubIcon,
   LinkedInIcon,
 } from "@/src/components/icons";
+import { smoothScrollToHash } from "@/src/components/navbar";
 
 const QUICK_LINKS = [
   { href: "#about", label: "About" },
@@ -84,6 +85,10 @@ export function Footer() {
                 <li key={link.href}>
                   <a
                     href={link.href}
+                    onClick={(e) => {
+                      e.preventDefault();
+                      smoothScrollToHash(link.href);
+                    }}
                     className="inline-flex items-center gap-2 text-foreground/70 transition-colors hover:text-brand"
                   >
                     <span aria-hidden className="text-brand/60">▹</span>

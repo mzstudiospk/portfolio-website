@@ -7,7 +7,7 @@ export function ScrollProgress() {
   const { scrollYProgress } = useScroll();
   // Spring smooths out the jitter you'd get from raw scroll value.
   const scaleX = useSpring(scrollYProgress, {
-    stiffness: 200,
+    stiffness: 100,
     damping: 30,
     restDelta: 0.001,
   });
