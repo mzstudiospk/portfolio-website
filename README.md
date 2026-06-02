@@ -40,7 +40,7 @@
 
 # Clone the repository
 
-git clone https://github.com/mzstudiospk/portfolio-website.git
+git clone https://github.com/muhammad-zeeshan-dev-pk/portfolio-website.git
 
 # Navigate to project
 
@@ -76,4 +76,4 @@ This project is open source and available under the [MIT License](LICENSE).
 
 ⭐ **If you like this project, give it a star!** ⭐
 
-Built with ❤️ by [Muhammad Zeeshan](https://github.com/mzstudiospk)
+Built with ❤️ by [Muhammad Zeeshan](https://github.com/muhammad-zeeshan-dev-pk)

@@ -50,7 +50,7 @@ const JSON_LD_PERSON = {
     "AWS",
   ],
   sameAs: [
-    "https://github.com/mzstudiospk",
+    "https://github.com/muhammad-zeeshan-dev-pk",
     "https://linkedin.com/in/muhammadzeeshan-dev",
     "https://facebook.com/MZStudiosPK",
   ],
@@ -64,7 +64,7 @@ export const metadata: Metadata = {
   },
   description: SITE_DESCRIPTION,
   applicationName: SITE_NAME,
-  authors: [{ name: "Muhammad Zeeshan", url: "https://github.com/mzstudiospk" }],
+  authors: [{ name: "Muhammad Zeeshan", url: "https://github.com/muhammad-zeeshan-dev-pk" }],
   creator: "Muhammad Zeeshan",
   publisher: "MZ Studios",
   keywords: [

@@ -9,6 +9,7 @@ import { Contact } from "@/src/components/sections/contact";
 import { Experience } from "@/src/components/sections/experience";
 import { FAQ } from "@/src/components/sections/faq";
 import { Hero } from "@/src/components/sections/hero";
+import { LaunchStrip } from "@/src/components/sections/launch-strip";
 import { Process } from "@/src/components/sections/process";
 import { Projects } from "@/src/components/sections/projects";
 import { Services } from "@/src/components/sections/services";
@@ -25,6 +26,7 @@ export default function Home() {
       <Navbar />
       <main id="main" className="relative flex flex-1 flex-col">
         <Hero />
+        <LaunchStrip />
         <TrustBadges />
         <About />
         <Experience />

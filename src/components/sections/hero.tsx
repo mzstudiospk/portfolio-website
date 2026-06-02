@@ -18,7 +18,7 @@ type SocialLink = {
 };
 
 const SOCIALS: SocialLink[] = [
-  { label: "GitHub", href: "https://github.com/mzstudiospk", icon: GithubIcon },
+  { label: "GitHub", href: "https://github.com/muhammad-zeeshan-dev-pk", icon: GithubIcon },
   {
     label: "LinkedIn",
     href: "https://linkedin.com/in/muhammadzeeshan-dev",

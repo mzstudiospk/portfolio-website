@@ -20,11 +20,31 @@ type Project = {
 
 const PROJECTS: Project[] = [
   {
+    title: "PostPilot",
+    description:
+      "AI Co-Pilot for Social Media Posts. A production-ready SaaS that generates engaging posts for LinkedIn, Twitter, Instagram, and Facebook in seconds — with ChatGPT-style streaming, tone control, URL-to-post, and a credit-based system. Built solo in 8 days.",
+    tech: [
+      "Next.js 16",
+      "React 19",
+      "TypeScript",
+      "Supabase",
+      "Google Gemini AI",
+      "Tailwind CSS",
+      "Framer Motion",
+    ],
+    github: "https://github.com/muhammad-zeeshan-dev-pk/PostPilot-showcase",
+    external: "https://postpilot-io.vercel.app",
+    // TODO: drop the real PostPilot screenshot at public/projects/postpilot.png
+    image: "/projects/postpilot.png",
+    imageAlt: "PostPilot AI Social Media Post Generator Mockup",
+    featured: true,
+  },
+  {
     title: "SwaasthGaurdian",
     description:
       "Healthcare mobile application with user authentication, OTP verification, appointment booking, and medical information management for Pakistani healthcare providers.",
     tech: ["React Native", "Firebase", "Redux", "REST API"],
-    github: "https://github.com/mzstudiospk/SwaasthGaurdian",
+    github: "https://github.com/muhammad-zeeshan-dev-pk/SwaasthGaurdian",
     image: "/projects/swaasthgaurdian.png",
     imageAlt: "SwaasthGaurdian Healthcare Mobile App Mockup",
     featured: true,
@@ -62,16 +82,6 @@ const PROJECTS: Project[] = [
     tech: ["React Native", "Node.js", "WebSocket", "MongoDB"],
     image: "/projects/social-app.png",
     imageAlt: "Social Networking Mobile App Mockup",
-  },
-  {
-    title: "MZ Studios Portfolio",
-    description:
-      "This very website you're viewing! Built with Next.js 16, TypeScript, Tailwind CSS v4, Framer Motion, and deployed on Vercel.",
-    tech: ["Next.js", "TypeScript", "Tailwind", "Framer Motion"],
-    github: "https://github.com/mzstudiospk/portfolio-website",
-    external: "https://muhammad-zeeshan-dev.vercel.app",
-    image: "/projects/mz-portfolio.png",
-    imageAlt: "MZ Studios Portfolio Website Mockup",
   },
 ];
 

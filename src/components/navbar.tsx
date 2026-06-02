@@ -35,7 +35,7 @@ const NAV_LINKS = [
   { href: "#contact", label: "Contact" },
 ] as const;
 
-const GITHUB_URL = "https://github.com/mzstudiospk";
+const GITHUB_URL = "https://github.com/muhammad-zeeshan-dev-pk";
 const EMAIL = "zeeshanofficial337@gmail.com";
 
 export function Navbar() {

@@ -20,7 +20,7 @@ const QUICK_LINKS = [
 ] as const;
 
 const SOCIALS = [
-  { label: "GitHub", href: "https://github.com/mzstudiospk", Icon: GithubIcon },
+  { label: "GitHub", href: "https://github.com/muhammad-zeeshan-dev-pk", Icon: GithubIcon },
   {
     label: "LinkedIn",
     href: "https://linkedin.com/in/muhammadzeeshan-dev",
